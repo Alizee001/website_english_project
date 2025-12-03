@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pschitt & Co - 3D Sélection de Produit</title> 
+    <title>Pschitt & Co - 3D Product Selection</title> 
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.12.0/model-viewer.min.js"></script>
 
     <style>
-        /* Styles de base pour le corps et la police */
+        /* Base styles for body and font */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -19,7 +19,7 @@
             color: #333;
         }
 
-        /* Styles du Header */
+        /* Header Styles */
         .main-header {
             display: flex;
             justify-content: space-between;
@@ -38,10 +38,10 @@
         }
 
         .nav-item:hover, .nav-item.active {
-            color: #007bff; /* Couleur d'accent */
+            color: #007bff; /* Accent Color */
         }
         
-        /* Styles de la zone principale */
+        /* Main area styles */
         main {
             display: flex;
             flex-direction: column;
@@ -56,7 +56,7 @@
             text-align: center;
         }
 
-        /* Styles de la Visionneuse 3D */
+        /* 3D Viewer Styles */
         model-viewer {
             width: 100%;
             max-width: 800px; 
@@ -67,7 +67,7 @@
             margin-bottom: 30px;
         }
 
-        /* Styles des sélecteurs de modèles */
+        /* Model selector styles */
         .model-selector {
             display: flex;
             gap: 15px;
@@ -99,13 +99,13 @@
             box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
         }
 
-        /* Styles du Footer */
+        /* Footer Styles */
         .main-footer {
             text-align: center;
             padding: 15px;
             background-color: #333;
             color: #fff;
-            margin-top: auto; /* Pousse le footer vers le bas */
+            margin-top: auto; /* Pushes the footer to the bottom */
         }
     </style>
 </head>
@@ -116,54 +116,54 @@
             </div>
         <nav>
             <a href="index.html" class="nav-item">HOME</a> 
-            <a href="#" class="nav-item active">3D Objet</a>
+            <a href="#" class="nav-item active">3D Object</a>
         </nav>
     </header>
 
     <main>
-        <h1>🧴 Nos Flacons 3D Interactifs - Pschitt & Co.</h1>
+        <h1>🧴 Our Interactive 3D Bottles - Pschitt & Co.</h1>
 
         <div class="model-selector">
             <button 
                 class="model-button active" 
                 data-model-src="models/citron.glb" 
-                data-alt-text="Modèle 3D Citron"
+                data-alt-text="Sharp Citrus 3D Model"
                 onclick="changeModel(this)">
-                🍋 Citron
+                🍋 Sharp Citrus 🍋
             </button>
             <button 
                 class="model-button" 
                 data-model-src="models/lavande.glb" 
-                data-alt-text="Modèle 3D Lavande"
+                data-alt-text="Diplomatic Lavender 3D Model"
                 onclick="changeModel(this)">
-                💜 Lavande
+                💜 Diplomatic Lavender 💜
             </button>
             <button 
                 class="model-button" 
                 data-model-src="models/nature.glb" 
-                data-alt-text="Modèle 3D Nature"
+                data-alt-text="Neutral Mist 3D Model"
                 onclick="changeModel(this)">
-                🌿 Nature
+                🌿 Neutral Mist 🌿
             </button>
             <button 
                 class="model-button" 
                 data-model-src="models/menthe.glb" 
-                data-alt-text="Modèle 3D Menthe"
+                data-alt-text="Calming Mint 3D Model"
                 onclick="changeModel(this)">
-                🍃 Menthe
+                🍃 Calming Mint 🍃
             </button>
         </div>
         
         <model-viewer
             id="pschitt-viewer"
-            alt="Modèle 3D Citron"
+            alt="Lemon 3D Model"
             src="models/citron.glb" 
             camera-controls 
             auto-rotate 
             shadow-intensity="1"
             exposure="1"
             loading="eager"
-            aria-label="Visionneuse 3D interactive"
+            aria-label="Interactive 3D Viewer"
         >
             <div slot="progress-bar"></div>
         </model-viewer>
@@ -180,20 +180,20 @@
             const newSrc = buttonElement.getAttribute('data-model-src');
             const newAlt = buttonElement.getAttribute('data-alt-text');
             
-            // 1. Mise à jour du modèle
+            // 1. Update the model
             viewer.src = newSrc;
             viewer.alt = newAlt;
             
-            // 2. Gestion de la classe 'active' pour les boutons
+            // 2. Manage the 'active' class for buttons
             const buttons = document.querySelectorAll('.model-button');
             buttons.forEach(btn => btn.classList.remove('active'));
             buttonElement.classList.add('active');
             
-            // Re-initialiser la caméra pour une meilleure vue après le changement
+            // Re-initialize camera for better view after change
             viewer.cameraOrbit = '0deg 75deg 105%';
         }
         
-        // Initialisation de la caméra au chargement (optionnel)
+        // Initial camera setup on load (optional)
         document.addEventListener('DOMContentLoaded', () => {
             const viewer = document.getElementById('pschitt-viewer');
             viewer.cameraOrbit = '0deg 75deg 105%';
