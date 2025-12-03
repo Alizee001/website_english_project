@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pschitt & Co - 3D Sélection de Produit</title> 
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.12.0/model-viewer.min.js"></script>
+
+    <style>
+        /* Styles de base pour le corps et la police */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f9;
+            color: #333;
+        }
+
+        /* Styles du Header */
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #555;
+            margin-left: 25px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: #007bff; /* Couleur d'accent */
+        }
+        
+        /* Styles de la zone principale */
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        /* Styles de la Visionneuse 3D */
+        model-viewer {
+            width: 100%;
+            max-width: 800px; 
+            height: 500px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            margin-bottom: 30px;
+        }
+
+        /* Styles des sélecteurs de modèles */
+        .model-selector {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .model-button {
+            padding: 10px 20px;
+            border: 2px solid #ccc;
+            background-color: #fff;
+            color: #333;
+            cursor: pointer;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .model-button:hover {
+            border-color: #007bff;
+            color: #007bff;
+        }
+        
+        .model-button.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Styles du Footer */
+        .main-footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #333;
+            color: #fff;
+            margin-top: auto; /* Pousse le footer vers le bas */
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo-container">
+            </div>
+        <nav>
+            <a href="index.html" class="nav-item">HOME</a> 
+            <a href="#" class="nav-item active">3D Objet</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>🧴 Nos Flacons 3D Interactifs - Pschitt & Co.</h1>
+
+        <div class="model-selector">
+            <button 
+                class="model-button active" 
+                data-model-src="models/citron.glb" 
+                data-alt-text="Modèle 3D Citron"
+                onclick="changeModel(this)">
+                🍋 Citron
+            </button>
+            <button 
+                class="model-button" 
+                data-model-src="models/lavande.glb" 
+                data-alt-text="Modèle 3D Lavande"
+                onclick="changeModel(this)">
+                💜 Lavande
+            </button>
+            <button 
+                class="model-button" 
+                data-model-src="models/nature.glb" 
+                data-alt-text="Modèle 3D Nature"
+                onclick="changeModel(this)">
+                🌿 Nature
+            </button>
+            <button 
+                class="model-button" 
+                data-model-src="models/menthe.glb" 
+                data-alt-text="Modèle 3D Menthe"
+                onclick="changeModel(this)">
+                🍃 Menthe
+            </button>
+        </div>
+        
+        <model-viewer
+            id="pschitt-viewer"
+            alt="Modèle 3D Citron"
+            src="models/citron.glb" 
+            camera-controls 
+            auto-rotate 
+            shadow-intensity="1"
+            exposure="1"
+            loading="eager"
+            aria-label="Visionneuse 3D interactive"
+        >
+            <div slot="progress-bar"></div>
+        </model-viewer>
+        
+    </main>
+
+    <footer class="main-footer">
+        <p>© 2025 Pschitt & Co.</p>
+    </footer>
+
+    <script>
+        function changeModel(buttonElement) {
+            const viewer = document.getElementById('pschitt-viewer');
+            const newSrc = buttonElement.getAttribute('data-model-src');
+            const newAlt = buttonElement.getAttribute('data-alt-text');
+            
+            // 1. Mise à jour du modèle
+            viewer.src = newSrc;
+            viewer.alt = newAlt;
+            
+            // 2. Gestion de la classe 'active' pour les boutons
+            const buttons = document.querySelectorAll('.model-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            buttonElement.classList.add('active');
+            
+            // Re-initialiser la caméra pour une meilleure vue après le changement
+            viewer.cameraOrbit = '0deg 75deg 105%';
+        }
+        
+        // Initialisation de la caméra au chargement (optionnel)
+        document.addEventListener('DOMContentLoaded', () => {
+            const viewer = document.getElementById('pschitt-viewer');
+            viewer.cameraOrbit = '0deg 75deg 105%';
+        });
+    </script>
+</body>
+</html>
